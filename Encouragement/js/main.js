@@ -1,13 +1,13 @@
-﻿// For an introduction to the Blank template, see the following documentation:
-// http://go.microsoft.com/fwlink/?LinkId=232509
-
-(function () {
+﻿(function () {
 	"use strict";
 
 	var app = WinJS.Application;
 	var activation = Windows.ApplicationModel.Activation;
 	var isFirstActivation = true;
 
+	var notifications = Windows.UI.Notifications;
+	var notificationManager = notifications.ToastNotificationManager;
+	
 	app.onactivated = function (args) {
 		if (args.detail.kind === activation.ActivationKind.voiceCommand) {
 			// TODO: Handle relevant ActivationKinds. For example, if your app can be started by voice commands,
@@ -39,6 +39,12 @@
 			// TODO: The app was activated and had not been running. Do general startup initialization here.
 			document.addEventListener("visibilitychange", onVisibilityChanged);
 			args.setPromise(WinJS.UI.processAll());
+
+		    // Retrieve the test button and register our event handler.
+			var testButton = document.getElementById("testButton");
+			testButton.addEventListener("click", testButtonClickHandler, false);
+
+			displayToast("You're doing great!");
 		}
 
 		isFirstActivation = false;
@@ -55,6 +61,31 @@
 		// You might use the WinJS.Application.sessionState object, which is automatically saved and restored across suspension.
 		// If you need to complete an asynchronous operation before your application is suspended, call args.setPromise().
 	};
+
+	function testButtonClickHandler(eventInfo) {
+	    displayToast("Here I am!");
+	}
+
+	function displayToast(message) {
+	    // Create the toast xml
+	    var template = notifications.ToastTemplateType.toastImageAndText01;
+	    var toastXml = notificationManager.getTemplateContent(template);
+
+	    // Set the toast text
+	    var toastTextElements = toastXml.getElementsByTagName("text");
+	    toastTextElements[0].appendChild(toastXml.createTextNode(message));
+
+	    // Set the toast image
+	    var toastImageElements = toastXml.getElementsByTagName("image");
+	    toastImageElements[0].setAttribute("src", "ms-appx:///images/smiles/face-grin.png");
+	    toastImageElements[0].setAttribute("alt", "Grinning face");
+
+	    // Show the toast
+	    var toast = new notifications.ToastNotification(toastXml);
+
+	    var toastNotifier = notifications.ToastNotificationManager.createToastNotifier();
+	    toastNotifier.show(toast);
+	}
 
 	app.start();
 

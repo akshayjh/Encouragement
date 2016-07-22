@@ -1,2 +1,22 @@
-﻿body {
+﻿.container {
+    padding: 15px;
+}
+
+.header {
+    text-align: center;
+    overflow: hidden;
+    text-wrap: none;
+}
+
+.caption {
+    font-size: large;
+}
+
+#testButtonContainer {
+    text-align: center;
+}
+
+#testButton {
+    width: 200px;
+    height: 50px;
 }
