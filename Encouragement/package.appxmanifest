@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="51118goodrobot.Encouragement" Version="1.1.1.0" Publisher="CN=52FBA6A1-BC0B-41C1-9F75-0814DA574658" />
+  <Identity Name="goodrobot.Encouragement" Version="1.1.1.0" Publisher="CN=52FBA6A1-BC0B-41C1-9F75-0814DA574658" />
   <mp:PhoneIdentity PhoneProductId="7ac81911-1149-49d5-9e77-c2ec971d80ae" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Encouragement</DisplayName>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" StartPage="index.html">
-      <uap:VisualElements DisplayName="Encouragement" Description="Encouragement" BackgroundColor="transparent" Square150x150Logo="images\Square150x150Logo.png" Square44x44Logo="images\Square44x44Logo.png">
+      <uap:VisualElements DisplayName="Encouragement" Description="Encouragement is designed to reduce stress an increase productivity by periodically displaying encouraging messages to the user. Everyone can use a little encouragement every now and then." BackgroundColor="transparent" Square150x150Logo="images\Square150x150Logo.png" Square44x44Logo="images\Square44x44Logo.png">
         <uap:DefaultTile Wide310x150Logo="images\Wide310x150Logo.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="images\splashscreen.png" />
