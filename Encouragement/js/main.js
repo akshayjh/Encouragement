@@ -44,7 +44,7 @@
 			var testButton = document.getElementById("testButton");
 			testButton.addEventListener("click", testButtonClickHandler, false);
 
-			displayToast("You're doing great!");
+			displayUserGreeting();
 		}
 
 		isFirstActivation = false;
@@ -64,6 +64,23 @@
 
 	function testButtonClickHandler(eventInfo) {
 	    displayToast("Here I am!");
+	}
+
+	function displayUserGreeting() {
+	    if (Windows.System.UserProfile.UserInformation.nameAccessAllowed) {
+
+	        var firstName = Windows.System.KnownUserProperties.firstName;
+
+	        Windows.System.UserProfile.UserInformation.getFirstNameAsync().done(function (result) {
+	            if (result) {
+	                displayToast("Hello " + result + ", you are doing great!")
+	            } else {
+	                displayToast("You are doing great!");
+	            }
+	        });
+	    } else {
+	        displayToast("You're doing great!");
+	    }
 	}
 
 	function displayToast(message) {
