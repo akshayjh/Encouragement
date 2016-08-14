@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NotificationBackgroundTaskRuntimeComponent
 {
-    public sealed class Class1
+    public sealed class NotificationTask
     {
     }
 }
