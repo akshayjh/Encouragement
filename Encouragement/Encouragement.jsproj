@@ -86,6 +86,7 @@
     <Content Include="lib\winjs-4.0.1\fonts\Symbols.ttf" />
     <None Include="Package.StoreAssociation.xml" />
     <None Include="Encouragement_TemporaryKey.pfx" />
+    <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NotificationBackgroundTaskRuntimeComponent\NotificationBackgroundTaskRuntimeComponent.csproj" />

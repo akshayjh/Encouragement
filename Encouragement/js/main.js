@@ -7,7 +7,18 @@
 
 	var notifications = Windows.UI.Notifications;
 	var notificationManager = notifications.ToastNotificationManager;
-	
+
+	var timeTrigger = new Windows.ApplicationModel.Background.TimeTrigger(15, false);
+
+	var builder = new Windows.ApplicationModel.Background.BackgroundTaskBuilder();
+	builder.name = "EncouragementTask"
+	builder.taskEntryPoint = "NotificationBackgroundTaskRuntimeComponent.NotificationTask";
+	builder.setTrigger(timeTrigger);
+
+    // TODO: Add user present condition to task
+
+	var task = builder.register();
+
 	app.onactivated = function (args) {
 		if (args.detail.kind === activation.ActivationKind.voiceCommand) {
 			// TODO: Handle relevant ActivationKinds. For example, if your app can be started by voice commands,
