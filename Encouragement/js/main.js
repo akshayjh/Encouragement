@@ -1,5 +1,5 @@
 ﻿(function () {
-	"use strict";
+    "use strict";
 
 	var app = WinJS.Application;
 	var activation = Windows.ApplicationModel.Activation;
@@ -8,16 +8,42 @@
 	var notifications = Windows.UI.Notifications;
 	var notificationManager = notifications.ToastNotificationManager;
 
-	var timeTrigger = new Windows.ApplicationModel.Background.TimeTrigger(15, false);
+	var _isRegistered = false,
+        _bgTaskName = "EncouragementTask",
+        _registeredTasks = Windows.ApplicationModel.Background.BackgroundTaskRegistration.allTasks.first(),
+        task;
 
-	var builder = new Windows.ApplicationModel.Background.BackgroundTaskBuilder();
-	builder.name = "EncouragementTask"
-	builder.taskEntryPoint = "NotificationBackgroundTaskRuntimeComponent.NotificationTask";
-	builder.setTrigger(timeTrigger);
+    // loop throught all of the tasks and find out who is already registered
+	while (_registeredTasks.hasCurrent) {
+	    var task = _registeredTasks.current.value;
+	    if (task.name === _bgTaskName) {
+	        _isRegistered = true;
+	        break;
+	    }
 
-    // TODO: Add user present condition to task
+	    _registeredTasks.moveNext();
+	}
 
-	var task = builder.register();
+	if (!_isRegistered) {
+	    var taskBuilder = new Windows.ApplicationModel.Background.BackgroundTaskBuilder();
+
+	    var taskTrigger = new Windows.ApplicationModel.Background.SystemTrigger(
+            Windows.ApplicationModel.Background.SystemTriggerType.timeZoneChange, false
+        );
+
+	    taskBuilder.name = _bgTaskName;
+	    taskBuilder.taskEntryPoint = "NotificationBackgroundTaskRuntimeComponent.NotificationTask";
+	    taskBuilder.setTrigger(taskTrigger);
+
+	    // Add user present condition to task
+        taskBuilder.addCondition(
+            new Windows.ApplicationModel.Background.SystemCondition(
+                Windows.ApplicationModel.Background.SystemConditionType.userPresent
+            )
+        );
+
+	    task = taskBuilder.register();
+	}
 
 	app.onactivated = function (args) {
 		if (args.detail.kind === activation.ActivationKind.voiceCommand) {

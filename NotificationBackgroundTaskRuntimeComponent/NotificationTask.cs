@@ -15,26 +15,19 @@ namespace NotificationBackgroundTaskRuntimeComponent
 {
     public sealed class NotificationTask : IBackgroundTask
     {
-
-        public void Run(IBackgroundTaskInstance taskInstance)
+        public async void Run(IBackgroundTaskInstance taskInstance)
         {
-            // BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
-
-            Debug.WriteLine("Background " + taskInstance.Task.Name + " Starting...");
-
-            // 
-            // Query BackgroundWorkCost 
-            // Guidance: If BackgroundWorkCost is high, then perform only the minimum amount 
-            // of work in the background task and return immediately. 
-            // 
-            var cost = BackgroundWorkCost.CurrentBackgroundWorkCost;
-            var settings = ApplicationData.Current.LocalSettings;
-            settings.Values["BackgroundWorkCost"] = cost.ToString();
+            BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
 
             Debug.WriteLine("Testing app!!!");
 
-            // ----------------------
+            ShowToast();
 
+            deferral.Complete();
+        }
+
+        private void ShowToast()
+        {
             // simple example with a Toast, to enable this go to manifest file
             // and mark App as TastCapable - it won't work without this
             // The Task will start but there will be no Toast.
@@ -44,8 +37,6 @@ namespace NotificationBackgroundTaskRuntimeComponent
             textElements[0].AppendChild(toastXml2.CreateTextNode("My first Task"));
             textElements[1].AppendChild(toastXml2.CreateTextNode("I'm message from your background task!"));
             ToastNotificationManager.CreateToastNotifier().Show(new ToastNotification(toastXml2));
-
-            //deferral.Complete();
         }
     }
 }
